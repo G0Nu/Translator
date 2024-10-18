@@ -9,6 +9,12 @@ nltk.download('punkt')
 nltk.download('stopwords')
 nltk.download('wordnet')
 
+with open('ch_books.text','r') as f:
+    content = f.read()
+    f.close()
+#print(content)
+
+
 '''
 WITHOUT NLTK:
 string = "Hello how are you?, I'm fine thank you. I'm very glad you are here. Because you are a nice person. Yahoo"
@@ -38,7 +44,15 @@ def clean_text(text):
     words = [lemmatizer.lemmatize(word) for word in words]
     return ''.join(words)
     
-text = "This is a sample sentence, showing off the stop words filtration."
-print(text,"\n\n")
-newtext = clean_text(text)
-print(newtext)
+
+def remove_numbers(text):
+    string_list = [''.join([char for char in string if not char.isdigit()]) for string in content] #to remove numbers from a string list
+    text = ''.join(string_list)
+    return text
+    
+# newcontent = clean_text(content)
+# print(newcontent)
+no_numbers = remove_numbers(content)
+print(no_numbers)
+data = clean_text(no_numbers)
+print(data)
