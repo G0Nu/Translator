@@ -1,4 +1,5 @@
-from cgitb import text
+
+from isort import file
 import nltk 
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
@@ -9,10 +10,10 @@ nltk.download('punkt')
 nltk.download('stopwords')
 nltk.download('wordnet')
 
-with open('ch_books.text','r') as f:
-    content = f.read()
-    f.close()
-#print(content)
+
+f = open('ch_books.text','r')
+content = f.read()
+f.close()
 
 
 '''
@@ -36,12 +37,15 @@ With NLTK
 def clean_text(text):
 
     text = text.lower() #lowercase
-    text = text.translate(str.maketrans('','',string.punctuation))#removing punctuation
+    text = text.translate(str.maketrans('','',string.punctuation.replace(' ', '')))#remove punctuation without spaces
+
+#removing punctuation
     words = nltk.word_tokenize(text)#tokenizing or spliting the words
 
     #Lemmatize or stemming 
     lemmatizer = WordNetLemmatizer()
     words = [lemmatizer.lemmatize(word) for word in words]
+    print(words)
     return ''.join(words)
     
 
@@ -52,7 +56,7 @@ def remove_numbers(text):
     
 # newcontent = clean_text(content)
 # print(newcontent)
-no_numbers = remove_numbers(content)
-print(no_numbers)
-data = clean_text(no_numbers)
-print(data)
+# no_numbers = remove_numbers(content)
+# print(no_numbers)
+data = clean_text(content)
+# print(data)
