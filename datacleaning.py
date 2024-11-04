@@ -7,6 +7,10 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 import string
+from spellchecker import SpellChecker
+from tables import Unknown
+
+spell = SpellChecker()
 
 nltk.download('punkt')
 nltk.download('stopwords')
@@ -17,7 +21,7 @@ f = open('ch_books.text','r')
 content = f.read()
 f.close()
 all_words = []
-
+misspelled = []
 
 #WITHOUT NLTK:
 def Cleaning(x):#creating a function
@@ -50,10 +54,13 @@ def Cleaning(x):#creating a function
         sent_list = [lemmatizer.lemmatize(word) for word in sent_list]
         all_words.append(sent_list)
         
+        
         z = z+1
-    return all_words
+        
+
+        
+    return all_words#misspelled
 data = Cleaning(content)
 print(data)
-
 
 
