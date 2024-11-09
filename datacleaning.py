@@ -10,7 +10,7 @@ import string
 from spellchecker import SpellChecker
 from tables import Unknown
 
-spell = SpellChecker()
+
 
 nltk.download('punkt')
 nltk.download('stopwords')
@@ -21,7 +21,8 @@ f = open('ch_books.text','r')
 content = f.read()
 f.close()
 all_words = []
-misspelled = []
+
+
 
 #WITHOUT NLTK:
 def Cleaning(x):#creating a function
@@ -49,7 +50,8 @@ def Cleaning(x):#creating a function
         i = x[z]
         sent_list = []
         res = ''.join(letter for letter in i if letter.isalnum() or letter.isspace())#removing special characters using isalnum() and exceptuating spaces
-        words = res.split()
+        res = ''.join(letter for letter in i if not letter.isdigit())#taking away the numbers in the list
+        words = res.split()#taking away the spaces and spliting
         sent_list.extend(words)
         sent_list = [lemmatizer.lemmatize(word) for word in sent_list]
         all_words.append(sent_list)
@@ -58,8 +60,7 @@ def Cleaning(x):#creating a function
         z = z+1
         
 
-        
-    return all_words#misspelled
+    return all_words
 data = Cleaning(content)
 print(data)
 
