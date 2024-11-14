@@ -1,3 +1,4 @@
+from ast import main
 from hmac import new
 from re import X
 from tkinter import Y
@@ -10,7 +11,12 @@ import string
 from spellchecker import SpellChecker
 import spellchecker
 from tables import Unknown
+from sklearn.feature_extraction.text import CountVectorizer
+import pandas as pd
 
+
+
+vectorizer = CountVectorizer()
 
 
 nltk.download('punkt')
@@ -67,3 +73,18 @@ def Cleaning(x):#creating a function
 data = Cleaning(content)
 print(data)
 
+main_data = [' '.join(doc) for doc in data]#we convert all the list into a single string so it can be converted to numerical data
+
+                        
+X = vectorizer.fit_transform(main_data)#convertion
+print(X.toarray())#we show the value of the new matrix
+
+'''Creating a dataframe with pandas and the data from the vectors'''
+word_counts = X.toarray()
+feature_names = vectorizer.get_feature_names_out()
+df = pd.DataFrame(word_counts, columns=feature_names)
+
+#saving it into a csv file
+df.to_csv('bag_of_words.csv', index=False)
+# Print confirmation 
+#print("Bag of Words saved to 'bag_of_words.csv'")
