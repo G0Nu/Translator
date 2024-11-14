@@ -8,6 +8,7 @@ from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 import string
 from spellchecker import SpellChecker
+import spellchecker
 from tables import Unknown
 
 spell = SpellChecker()
@@ -21,7 +22,7 @@ f = open('ch_books.text','r')
 content = f.read()
 f.close()
 all_words = []
-misspelled = []
+
 
 #WITHOUT NLTK:
 def Cleaning(x):#creating a function
@@ -32,7 +33,8 @@ def Cleaning(x):#creating a function
     x = x.lower()#lower case
     x = x.replace("?",".")
     x = x.replace("!",".")
-    
+    x = spell.correction(x)#spell does not allow to use it in lists, but it can correct the words in a string. Thats why I wrote it before the split
+
     x = x.split(".")
     #print(x,"\n\n\n\n")
     z = 0
@@ -59,8 +61,7 @@ def Cleaning(x):#creating a function
         
 
         
-    return all_words#misspelled
+    return all_words
 data = Cleaning(content)
 print(data)
-
 
